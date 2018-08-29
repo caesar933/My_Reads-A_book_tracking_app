@@ -11,7 +11,7 @@ class BookShelf extends React.Component{
             </h2>
             <div className="bookshelf-books">
               <ol className="books-grid">
-                {this.props.books.filter((book)=>(book.imageLinks)).map(book =>
+                {this.props.books.map(book =>
                   <li key={book.id} className="book">
                     <div className="book-top">
                       <div
@@ -19,12 +19,12 @@ class BookShelf extends React.Component{
                         style={{
                           width: 128,
                           height: 193,
-                          backgroundImage: "url(" + book.imageLinks.thumbnail + ")"
+                          backgroundImage: "url(" + (book.imageLinks ? book.imageLinks.thumbnail : '') + ")"
                         }}
                       />
                       <div className="book-shelf-changer">
                         <select value={book.shelf} onChange={event => this.props.initializeShelf(book.id, event)}>
-                          <option value="none" disabled>
+                          <option disabled>
                             Move to...
                           </option>
                           <option value="currentlyReading">Currently Reading</option>

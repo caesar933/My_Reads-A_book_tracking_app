@@ -15,7 +15,7 @@ class NewBook extends React.Component {
 
     bookStatus = (books) => {
         const bookStat = books.map(book =>{
-            book.shelf = 'empty';
+            book.shelf = 'none';
             this.props.currentBooks.forEach(secondBook =>{
                 if(book.id === secondBook.id){
                     book.shelf = secondBook.shelf;
@@ -48,9 +48,8 @@ class NewBook extends React.Component {
         })
         this.props.initializeShelf(book, shelf);
     }
- 
-    render(){
 
+    render(){
         return(
 <div className="search-books">
         <div className="search-books-bar">
@@ -68,7 +67,7 @@ class NewBook extends React.Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
-            {this.state.books.filter((book) => (book.imageLinks)).map(book =>
+            {this.state.books.map(book =>
               <li key={book.id} className="book">
                 <div className="book-top">
                   <div
@@ -76,16 +75,11 @@ class NewBook extends React.Component {
                     style={{
                       width: 128,
                       height: 193,
-                      backgroundImage: "url(" + book.imageLinks.thumbnail + ")"
+                      backgroundImage: "url(" + (book.imageLinks ? book.imageLinks.thumbnail : '') + ")"
                     }}
                   />
                   <div className="book-shelf-changer">
-                    <select
-                      value={book.shelf}
-                      onChange={e => {
-                        this.booksUpdate(book, e.target.value);
-                      }}
-                    >
+                    <select value={book.shelf} onChange={e => {this.booksUpdate(book, e.target.value);}}>
                       <option disabled>
                         Add to...
                       </option>

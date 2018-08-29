@@ -1,5 +1,5 @@
 import React from 'react'
-import {BrowserRouter as Router, Route} from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import * as BooksAPI from './BooksAPI'
 import BookList from './BookList'
 import './App.css'
@@ -21,37 +21,37 @@ class BooksApp extends React.Component {
 
   //Get all the books from the BookApi
 
-  componentDidMount(){
+  componentDidMount() {
     this.updateBookData()
   }
 
   initializeShelf = (book, shelf) => {
-    BooksAPI.update(book,shelf).then(response => {
+    BooksAPI.update(book, shelf).then(response => {
       this.updateBookData()
     });
   };
 
   updateBookData = () => {
     BooksAPI.getAll().then(data => {
-            this.setState({
-              books: data
-            })
-    });    
+      this.setState({
+        books: data
+      })
+    });
   }
 
   render() {
     return (
       <div className='app'>
-      <Route exact path="/" 
-        render={() => <BookList currentBooks={this.state.books} />} 
+        <Route exact path="/"
+          render={() => <BookList currentBooks={this.state.books} />}
         />
-      <Route
-        path="/search"
-        render={()=><NewBook initializeShelf={this.initializeShelf} currentBooks={this.state.books} />} 
-        /> 
+        <Route
+          path="/search"
+          render={() => <NewBook initializeShelf={this.initializeShelf} currentBooks={this.state.books} />}
+        />
       </div>
     );
-    }
+  }
 };
 
 export default BooksApp
